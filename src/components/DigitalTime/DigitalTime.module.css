@@ -1,0 +1,46 @@
+.time {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink);
+}
+
+.large {
+  font-size: var(--type-time-size);
+  line-height: var(--type-time-line);
+}
+
+.medium {
+  font-size: var(--type-heading-size);
+  line-height: var(--type-heading-line);
+}
+
+.hour,
+.minute {
+  position: relative;
+}
+
+.colorCoded .hour::after,
+.colorCoded .minute::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--hand-bar-height) * -1);
+  height: var(--hand-bar-height);
+  border-radius: var(--radius-pill);
+}
+
+.colorCoded .hour::after {
+  background: var(--color-hand-hour);
+}
+
+.colorCoded .minute::after {
+  background: var(--color-hand-minute);
+}
+
+.colon {
+  padding-inline: var(--space-1);
+}

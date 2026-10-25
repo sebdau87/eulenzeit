@@ -1,0 +1,7 @@
+.words {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  font-size: var(--type-heading-size);
+  line-height: var(--type-heading-line);
+  color: var(--color-ink);
+}

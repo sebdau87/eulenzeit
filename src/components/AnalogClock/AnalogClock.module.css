@@ -1,0 +1,127 @@
+/*
+ * Skaliert über die Spaltenbreite (Phone 288 / Tablet 400 / Desktop 320 px),
+ * nie breiter als die Spalte und im Querformat nie höher als 55 vh.
+ */
+.clock {
+  position: relative;
+  width: min(var(--clock-size), 100%, var(--clock-max-height));
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+.compact {
+  width: min(var(--mini-clock-size), 100%);
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.interactive .svg {
+  touch-action: none;
+  cursor: grab;
+}
+
+.interactive .svg:active {
+  cursor: grabbing;
+}
+
+.face {
+  fill: var(--color-weiss);
+}
+
+.ring {
+  fill: none;
+  stroke: var(--color-lavendel);
+}
+
+.dots {
+  fill: var(--color-ink-weich);
+}
+
+.ticks {
+  stroke: var(--color-ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.tickMajor {
+  stroke-width: 5;
+}
+
+.compact .tickMajor {
+  stroke-width: 8;
+}
+
+.hourMajor,
+.hourMinor,
+.minuteNumber {
+  font-family: var(--font-display);
+  text-anchor: middle;
+  dominant-baseline: central;
+  user-select: none;
+}
+
+.hourMajor {
+  fill: var(--color-ink);
+  font-weight: var(--weight-semibold);
+}
+
+.hourMinor {
+  fill: var(--color-ink);
+  font-weight: var(--weight-medium);
+}
+
+.minuteNumber {
+  fill: var(--color-hand-minute);
+  font-weight: var(--weight-semibold);
+}
+
+.hourHand,
+.minuteHand {
+  stroke-linecap: round;
+}
+
+.hourHand {
+  stroke: var(--color-hand-hour);
+  stroke-width: 10;
+}
+
+.minuteHand {
+  stroke: var(--color-hand-minute);
+  stroke-width: 6;
+}
+
+.pin {
+  fill: var(--color-ink);
+}
+
+.handle {
+  cursor: grab;
+}
+
+.handle:focus {
+  outline: none;
+}
+
+.focusRing {
+  fill: none;
+  stroke: var(--color-focus);
+  stroke-width: 3;
+  opacity: 0;
+}
+
+.handle:focus-visible .focusRing {
+  opacity: 1;
+}
+
+.knobHour {
+  fill: var(--color-hand-hour);
+}
+
+.knobMinute {
+  fill: var(--color-hand-minute);
+}

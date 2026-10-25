@@ -1,0 +1,173 @@
+/*
+ * Eulenzeit – Design-Tokens.
+ * Einzige Stelle im Code, an der Farben, Abstände, Radien, Größen und Schriftmaße
+ * als Rohwerte stehen. Alles andere referenziert diese Variablen
+ * (geprüft durch src/design/tokens.test.ts).
+ */
+:root {
+  /* ---------- Farben: Pastell / Tint / Deep ---------- */
+  --color-lavendel: #bbaaff;
+  --color-lavendel-tint: #eee8ff;
+  --color-lavendel-deep: #6b55d6;
+
+  --color-sonne: #ffdd79;
+  --color-sonne-tint: #fff4cc;
+  --color-sonne-deep: #8a5e00;
+
+  --color-rose: #ffb3cb;
+  --color-rose-tint: #ffe6ee;
+  --color-rose-deep: #c93465;
+
+  --color-himmel: #a9d8ff;
+  --color-himmel-tint: #e4f3ff;
+  --color-himmel-deep: #2268b8;
+
+  --color-minze: #a6e6c8;
+  --color-minze-tint: #dff8ec;
+  --color-minze-deep: #167a54;
+
+  --color-pfirsich: #ffc09a;
+  --color-pfirsich-tint: #ffebdd;
+  --color-pfirsich-deep: #b8501a;
+
+  /* ---------- Neutral ---------- */
+  --color-creme: #fffbf3;
+  --color-weiss: #ffffff;
+  --color-sand: #f6efe2;
+  --color-kante: #e3d9c6;
+  --color-ink: #2d2a4a;
+  --color-ink-weich: #5a5780;
+
+  /* ---------- Tack (feste Teile, unabhängig vom Gefieder) ---------- */
+  --color-tack-schnabel: #ff9f5a;
+  --color-tack-baeckchen: var(--color-rose);
+  --color-tack-bauch: var(--color-creme);
+  --color-tack-auge: var(--color-weiss);
+
+  /* ---------- Semantische Rollen ---------- */
+  --color-bg: var(--color-creme);
+  --color-surface: var(--color-weiss);
+  --color-card: var(--color-sand);
+  --color-text: var(--color-ink);
+  --color-text-soft: var(--color-ink-weich);
+  --color-focus: var(--color-lavendel-deep);
+  --color-hand-hour: var(--color-rose-deep);
+  --color-hand-minute: var(--color-himmel-deep);
+
+  /* ---------- Abstände ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* ---------- Radien ---------- */
+  --radius-s: 12px;
+  --radius-m: 20px;
+  --radius-l: 28px;
+  --radius-pill: 999px;
+
+  /* ---------- Tastenkante ---------- */
+  --edge-height: 4px;
+  --edge-pressed: 2px;
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 3px;
+  --sr-only-size: 1px;
+
+  /* ---------- Typografie ---------- */
+  --font-display: 'Fredoka', 'Nunito', system-ui, sans-serif;
+  --font-text: 'Nunito', system-ui, sans-serif;
+
+  --type-time-size: 72px;
+  --type-time-line: 72px;
+  --type-title-size: clamp(34px, 2.6vw + 24px, 40px);
+  --type-title-line: 48px;
+  --type-heading-size: 28px;
+  --type-heading-line: 36px;
+  --type-body-size: 20px;
+  --type-body-line: 30px;
+  --type-button-size: 20px;
+  --type-button-line: 24px;
+  --type-hint-size: 16px;
+  --type-hint-line: 24px;
+
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+
+  /* ---------- Größen (Phone = Basis, mobile first) ---------- */
+  --touch-min: 56px;
+  --column-max: 100%;
+  --column-gutter: 20px;
+  --screen-pad-top: var(--space-6);
+  --screen-pad-bottom: var(--space-7);
+  --screen-gap: var(--space-4);
+  --clock-size: 288px;
+  --clock-max-height: 55vh;
+  --mini-clock-size: 112px;
+  --tack-size: 84px;
+  --answer-height: 64px;
+  --button-height: 56px;
+  --progress-height: 16px;
+  --star-size: 32px;
+  --icon-size: 24px;
+  --hand-bar-height: 6px;
+
+  /* ---------- Bewegung ---------- */
+  --motion-fast: 150ms;
+  --motion-base: 200ms;
+  --motion-slow: 250ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Tablet: 601–1024 px (Hauptzielgerät) */
+@media (min-width: 601px) {
+  :root {
+    --column-max: 600px;
+    --clock-size: 400px;
+    --mini-clock-size: 168px;
+    --tack-size: 104px;
+    --answer-height: 72px;
+    --button-height: 64px;
+  }
+}
+
+/* Desktop: ab 1025 px */
+@media (min-width: 1025px) {
+  :root {
+    --column-max: 560px;
+    --clock-size: 320px;
+    --tack-size: 96px;
+    --answer-height: 64px;
+    --button-height: 56px;
+  }
+}
+
+/*
+ * Querformat mit wenig Höhe (Tablet quer, kleine Laptops): kompakt, damit auch mit Tipp oder
+ * Erklärung Uhr, Antworten und Hauptknopf ohne Scrollen sichtbar bleiben (DECISIONS D28).
+ * Berührflächen bleiben bei mindestens 56 px.
+ */
+@media (orientation: landscape) and (max-height: 820px) {
+  :root {
+    --screen-pad-top: var(--space-4);
+    --screen-pad-bottom: var(--space-4);
+    --screen-gap: var(--space-3);
+    --clock-max-height: 34vh;
+    --mini-clock-size: 88px;
+    --tack-size: 64px;
+    --answer-height: var(--touch-min);
+    --button-height: var(--touch-min);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 0ms;
+    --motion-base: 0ms;
+    --motion-slow: 0ms;
+  }
+}

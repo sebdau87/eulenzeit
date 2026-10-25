@@ -1,0 +1,94 @@
+.tack {
+  --plumage: var(--color-lavendel);
+  display: block;
+  width: var(--tack-size);
+  height: var(--tack-size);
+  flex: none;
+}
+
+.lavendel {
+  --plumage: var(--color-lavendel);
+}
+
+.sonne {
+  --plumage: var(--color-sonne);
+}
+
+.minze {
+  --plumage: var(--color-minze);
+}
+
+.body {
+  fill: var(--plumage);
+  stroke: var(--plumage);
+  stroke-width: 6;
+  stroke-linejoin: round;
+  transition:
+    fill var(--motion-slow) var(--motion-ease),
+    stroke var(--motion-slow) var(--motion-ease);
+}
+
+.belly {
+  fill: var(--color-tack-bauch);
+}
+
+.feathers {
+  fill: none;
+  stroke: var(--plumage);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.cheek {
+  fill: var(--color-tack-baeckchen);
+}
+
+.eyeWhite {
+  fill: var(--color-tack-auge);
+}
+
+.pupils {
+  fill: var(--color-ink);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.glint {
+  fill: var(--color-tack-auge);
+}
+
+.happyEyes {
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.orange {
+  fill: var(--color-tack-schnabel);
+  stroke: var(--color-tack-schnabel);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+/* Gelegentliches, kurzes Blinzeln (ca. 180 ms alle 6 s). */
+.blink {
+  animation: blink 6s var(--motion-ease) infinite;
+}
+
+@keyframes blink {
+  0%,
+  95%,
+  100% {
+    transform: scaleY(1);
+  }
+  97.5% {
+    transform: scaleY(0.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blink {
+    animation: none;
+  }
+}

@@ -1,0 +1,29 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.track {
+  flex: 1;
+  height: var(--progress-height);
+  border-radius: var(--radius-pill);
+  background: var(--color-kante);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--color-lavendel);
+  transition: width var(--motion-slow) var(--motion-ease);
+}
+
+.count {
+  flex: none;
+  font-size: var(--type-hint-size);
+  line-height: var(--type-hint-line);
+  font-weight: var(--weight-bold);
+  color: var(--color-ink-weich);
+}

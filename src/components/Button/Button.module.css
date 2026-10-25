@@ -1,0 +1,42 @@
+.button {
+  composes: pressable from '../shared/pressable.module.css';
+  min-height: var(--button-height);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-text);
+  font-size: var(--type-button-size);
+  line-height: var(--type-button-line);
+  font-weight: var(--weight-extrabold);
+  color: var(--color-ink);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.primary {
+  --edge-color: var(--color-lavendel-deep);
+  background: var(--color-lavendel);
+}
+
+.secondary {
+  --edge-color: var(--color-kante);
+  background: var(--color-weiss);
+}
+
+.tip {
+  --edge-color: var(--color-sonne-deep);
+  background: var(--color-sonne);
+}
+
+.button:disabled {
+  --edge-color: transparent;
+  background: var(--color-kante);
+  color: var(--color-ink-weich);
+}
+
+.iconOnly {
+  flex: none;
+  width: var(--button-height);
+  padding: 0;
+}

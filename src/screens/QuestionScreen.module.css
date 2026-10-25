@@ -1,0 +1,104 @@
+.screen {
+  gap: var(--screen-gap);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.levelInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.levelTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--type-hint-size);
+  line-height: var(--type-hint-line);
+  font-weight: var(--weight-bold);
+  color: var(--color-ink-weich);
+}
+
+.stars {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-weight: var(--weight-extrabold);
+}
+
+.starIcon {
+  width: var(--star-size);
+  height: var(--star-size);
+  color: var(--color-sonne);
+}
+
+.prompt {
+  font-size: var(--type-heading-size);
+  line-height: var(--type-heading-line);
+  text-align: center;
+}
+
+.prompt:focus {
+  outline: none;
+}
+
+.bubbleLead {
+  display: block;
+  font-weight: var(--weight-extrabold);
+}
+
+.bubbleDetail {
+  display: block;
+}
+
+.explain {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding-inline-start: var(--space-5);
+}
+
+.target {
+  display: block;
+  margin-top: var(--space-1);
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.main {
+  flex: 1;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+[data-kind='digital-to-clock'] .target {
+  display: flex;
+  justify-content: center;
+}
+
+[data-kind='words-to-clock'] .target {
+  font-size: var(--type-heading-size);
+}

@@ -1,0 +1,120 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.back {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-min);
+  color: var(--color-ink);
+  text-decoration-thickness: var(--edge-pressed);
+  text-underline-offset: var(--space-1);
+  font-weight: var(--weight-extrabold);
+}
+
+.lead {
+  color: var(--color-ink-weich);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-radius: var(--radius-l);
+  background: var(--color-card);
+}
+
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.swatchGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.swatch {
+  width: var(--space-6);
+  height: var(--space-6);
+  border-radius: var(--radius-s);
+}
+
+.swatchLabel {
+  margin-left: var(--space-1);
+  font-size: var(--type-hint-size);
+  line-height: var(--type-hint-line);
+  color: var(--color-ink-weich);
+}
+
+.time {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  font-size: var(--type-time-size);
+  line-height: var(--type-time-line);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  font-size: var(--type-title-size);
+  line-height: var(--type-title-line);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  font-size: var(--type-heading-size);
+  line-height: var(--type-heading-line);
+}
+
+.hint {
+  font-size: var(--type-hint-size);
+  line-height: var(--type-hint-line);
+  color: var(--color-ink-weich);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.row {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.tackRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+.readout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.row {
+  flex-wrap: wrap;
+}

@@ -1,0 +1,32 @@
+/*
+ * Gemeinsame Basis für alles Drückbare: feste 4-px-Kante unten,
+ * beim Drücken rutscht das Element 2 px nach unten.
+ * Die Kantenfarbe setzt jede Variante über --edge-color.
+ */
+.pressable {
+  --edge-color: var(--color-kante);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-min);
+  margin: 0 0 var(--edge-height);
+  border: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  box-shadow: 0 var(--edge-height) 0 var(--edge-color);
+  transition:
+    transform var(--motion-fast) var(--motion-ease),
+    box-shadow var(--motion-fast) var(--motion-ease),
+    background-color var(--motion-base) var(--motion-ease);
+}
+
+.pressable:active:not(:disabled) {
+  transform: translateY(var(--edge-pressed));
+  box-shadow: 0 var(--edge-pressed) 0 var(--edge-color);
+}
+
+.pressable:disabled {
+  cursor: not-allowed;
+}

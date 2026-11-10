@@ -31,9 +31,14 @@ function contentSecurityPolicy(): Plugin {
   };
 }
 
+/** Stand der App als „MM/JJJJ“, beim Build aus dem Datum gesetzt (DECISIONS D42). */
+const now = new Date();
+const BUILD_STAND = `${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+
 export default defineConfig({
   // Unterpfad beim Hosting, z. B. „/eulenzeit/“ für GitHub Pages (setzt der Workflow). Lokal: „/“.
   base: process.env.BASE_PATH ?? '/',
+  define: { __BUILD_STAND__: JSON.stringify(BUILD_STAND) },
   plugins: [
     react(),
     contentSecurityPolicy(),

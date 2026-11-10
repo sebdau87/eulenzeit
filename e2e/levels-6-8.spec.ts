@@ -115,4 +115,26 @@ test.describe('Speichern und Eltern-Bereich', () => {
     await page.getByRole('button', { name: 'Zurück zu den Levels' }).click();
     await expect(page.getByRole('heading', { name: 'Eulenzeit' })).toBeVisible();
   });
+
+  test('Eltern schalten alle Level frei, bleibt gespeichert', async ({ page }) => {
+    await page.goto('/#/');
+    const level8 = page.getByRole('button', { name: /Level 8/ });
+    await expect(level8).toHaveAttribute('aria-disabled', 'true');
+
+    await page.getByRole('button', { name: 'Für Eltern' }).click();
+    const label = (await page.getByText(/Wie viel ist \d × \d\?/).textContent())!;
+    const [, a, b] = label.match(/(\d) × (\d)/)!;
+    await page.getByLabel(label).fill(String(Number(a) * Number(b)));
+    await page.getByRole('button', { name: 'Weiter' }).click();
+    await page.getByRole('button', { name: 'Alle Level freischalten' }).click();
+    await page.getByRole('button', { name: 'Ja, freischalten' }).click();
+    await expect(page.getByRole('status')).toHaveText('Alle Level sind jetzt freigeschaltet.');
+    await page.getByRole('button', { name: 'Zurück zu den Levels' }).click();
+
+    await expect(level8).toHaveAttribute('aria-disabled', 'false');
+    await page.reload();
+    await expect(level8).toHaveAttribute('aria-disabled', 'false');
+    await level8.click();
+    await expect(page).toHaveTitle('Level 8: Zeit in Worten – Eulenzeit');
+  });
 });

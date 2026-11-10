@@ -11,6 +11,7 @@ const setup = () => {
     challenge: () => ({ a: 7, b: 8 }),
     onWordVariant: vi.fn(),
     onReset: vi.fn(),
+    onUnlockAll: vi.fn(),
     onBack: vi.fn(),
   };
   render(<ParentsScreen {...props} />);
@@ -59,6 +60,38 @@ describe('ParentsScreen', () => {
     expect(screen.getByRole('status')).toHaveTextContent('zurückgesetzt');
   });
 
+  it('schaltet alle Level erst nach Bestätigung frei', async () => {
+    const props = setup();
+    await passGate();
+    await userEvent.click(screen.getByRole('button', { name: 'Alle Level freischalten' }));
+    expect(props.onUnlockAll).not.toHaveBeenCalled();
+    expect(screen.queryByRole('button', { name: 'Fortschritt zurücksetzen' })).toBeNull();
+    await userEvent.click(screen.getByRole('button', { name: 'Abbrechen' }));
+    expect(props.onUnlockAll).not.toHaveBeenCalled();
+    await userEvent.click(screen.getByRole('button', { name: 'Alle Level freischalten' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Ja, freischalten' }));
+    expect(props.onUnlockAll).toHaveBeenCalledOnce();
+    expect(screen.getByRole('status')).toHaveTextContent('Alle Level sind jetzt freigeschaltet.');
+  });
+
+  it('bietet das Freischalten nicht an, wenn schon alles frei ist', async () => {
+    render(
+      <ParentsScreen
+        progress={{ unlocked: 8, levels: {} }}
+        settings={{ wordVariant: 'standard' }}
+        challenge={() => ({ a: 7, b: 8 })}
+        onWordVariant={vi.fn()}
+        onReset={vi.fn()}
+        onUnlockAll={vi.fn()}
+        onBack={vi.fn()}
+      />,
+    );
+    await passGate();
+    expect(screen.queryByRole('button', { name: 'Alle Level freischalten' })).toBeNull();
+    expect(screen.getByText('Alle Level sind freigeschaltet.')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Fortschritt zurücksetzen' })).toBeInTheDocument();
+  });
+
   it('nennt den Datenschutz', async () => {
     setup();
     await passGate();
@@ -73,6 +106,7 @@ describe('ParentsScreen', () => {
         challenge={() => ({ a: 6, b: 6 })}
         onWordVariant={vi.fn()}
         onReset={vi.fn()}
+        onUnlockAll={vi.fn()}
         onBack={vi.fn()}
       />,
     );

@@ -81,6 +81,17 @@ export function isUnlocked(p: Progress, level: LevelId): boolean {
   return level <= p.unlocked && getLevel(level).playable;
 }
 
+/** Schaltet alle spielbaren Level frei (Eltern-Bereich). Sterne, Serien und „geschafft“ bleiben. */
+export function unlockAll(p: Progress): Progress {
+  const highest = LEVELS.filter((l) => l.playable).reduce<LevelId>((max, l) => (l.id > max ? l.id : max), p.unlocked);
+  return highest === p.unlocked ? p : { ...p, unlocked: highest };
+}
+
+/** Sind schon alle spielbaren Level frei? */
+export function allUnlocked(p: Progress): boolean {
+  return unlockAll(p) === p;
+}
+
 function updateLevel(p: Progress, level: LevelId, patch: Partial<LevelProgress>): Progress {
   return { ...p, levels: { ...p.levels, [level]: { ...levelProgress(p, level), ...patch } } };
 }

@@ -104,6 +104,9 @@
   color: var(--color-minze-deep);
 }
 
-.parents {
-  align-self: center;
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
 }

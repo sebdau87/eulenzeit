@@ -42,6 +42,13 @@ test.describe('Barrierefreiheit (axe, WCAG 2.2 AA)', () => {
     await expectNoViolations(page, 'Eltern-Einstellungen');
   });
 
+  test('Über-Seite', async ({ page }) => {
+    await page.goto('/#/');
+    await page.getByRole('button', { name: 'Über Eulenzeit' }).click();
+    await expect(page.getByRole('heading', { name: 'Über Eulenzeit' })).toBeVisible();
+    await expectNoViolations(page, 'Über-Seite');
+  });
+
   test('Aufgabe: Frage, Tipp, Erklärung, Lob', async ({ page }) => {
     await page.goto('/?seed=3#/level/1');
     await expectNoViolations(page, 'Frage');
@@ -93,7 +100,7 @@ test.describe('Barrierefreiheit (ergänzend)', () => {
   test('Umbruch bei 320 px ohne seitliches Scrollen (WCAG 1.4.10)', async ({ page }) => {
     await seedProgress(page, 8);
     await page.setViewportSize({ width: 320, height: 640 });
-    for (const path of ['/#/', '/?seed=2#/level/5', '/?seed=3#/level/7', '/?seed=4#/level/8', '/#/eltern']) {
+    for (const path of ['/#/', '/?seed=2#/level/5', '/?seed=3#/level/7', '/?seed=4#/level/8', '/#/eltern', '/#/ueber']) {
       await page.goto(path);
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
@@ -112,6 +119,21 @@ test.describe('Barrierefreiheit (ergänzend)', () => {
     expect(running).toHaveLength(0);
   });
 
+  test('„Bewegung reduzieren“: Tack schwebt und blinzelt auf der Über-Seite nicht', async ({ page }) => {
+    await page.goto('/#/ueber');
+    await expect(page.getByTestId('about-tack')).toBeVisible();
+    const running = () =>
+      page.evaluate(
+        () =>
+          document
+            .getAnimations()
+            .filter((a) => a.playState === 'running' && (a.effect?.getTiming().duration as number) > 0).length,
+      );
+    expect(await running()).toBeGreaterThanOrEqual(2); // Schweben und Blinzeln
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    expect(await running()).toBe(0);
+  });
+
   test('Seitentitel benennt den Bildschirm (WCAG 2.4.2)', async ({ page }) => {
     await page.goto('/#/');
     await expect(page).toHaveTitle('Eulenzeit');
@@ -119,5 +141,7 @@ test.describe('Barrierefreiheit (ergänzend)', () => {
     await expect(page).toHaveTitle('Level 1: Volle Stunden – Eulenzeit');
     await page.goto('/#/eltern');
     await expect(page).toHaveTitle('Für Eltern – Eulenzeit');
+    await page.goto('/#/ueber');
+    await expect(page).toHaveTitle('Über Eulenzeit – Eulenzeit');
   });
 });

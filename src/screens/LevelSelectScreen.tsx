@@ -7,6 +7,7 @@ export interface LevelSelectScreenProps {
   progress: Progress;
   onStart: (level: LevelDef['id']) => void;
   onParents: () => void;
+  onAbout: () => void;
 }
 
 function status(level: LevelDef, progress: Progress) {
@@ -17,7 +18,7 @@ function status(level: LevelDef, progress: Progress) {
   return { kind: 'open' as const, text: `${lp.streak} von ${STREAK_TO_UNLOCK} in Folge` };
 }
 
-export function LevelSelectScreen({ progress, onStart, onParents }: LevelSelectScreenProps) {
+export function LevelSelectScreen({ progress, onStart, onParents, onAbout }: LevelSelectScreenProps) {
   const stars = totalStars(progress);
   return (
     <ScreenColumn>
@@ -65,9 +66,14 @@ export function LevelSelectScreen({ progress, onStart, onParents }: LevelSelectS
         })}
       </ul>
 
-      <Button variant="secondary" className={styles.parents} onClick={onParents}>
-        Für Eltern
-      </Button>
+      <div className={styles.footer}>
+        <Button variant="secondary" onClick={onParents}>
+          Für Eltern
+        </Button>
+        <Button variant="secondary" onClick={onAbout}>
+          Über Eulenzeit
+        </Button>
+      </div>
     </ScreenColumn>
   );
 }

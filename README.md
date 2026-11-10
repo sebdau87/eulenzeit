@@ -13,7 +13,7 @@ npm install
 npm run dev        # Entwicklungsserver, http://localhost:5173
 ```
 
-- Levelauswahl: `#/`, Level: `#/level/1` … `#/level/8`, Eltern-Bereich: `#/eltern`
+- Levelauswahl: `#/`, Level: `#/level/1` … `#/level/8`, Eltern-Bereich: `#/eltern`, Über-Seite: `#/ueber`
 - `?seed=123` macht die Aufgaben reproduzierbar
 - Komponentenseite (alle Bausteine in allen Zuständen): `#/komponenten`
 

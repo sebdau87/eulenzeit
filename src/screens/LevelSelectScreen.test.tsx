@@ -7,7 +7,7 @@ import { LevelSelectScreen } from './LevelSelectScreen';
 describe('LevelSelectScreen', () => {
   it('zeigt alle 8 Level, nur Level 1 ist anfangs frei', async () => {
     const onStart = vi.fn();
-    render(<LevelSelectScreen progress={initialProgress()} onStart={onStart} onParents={vi.fn()} />);
+    render(<LevelSelectScreen progress={initialProgress()} onStart={onStart} onParents={vi.fn()} onAbout={vi.fn()} />);
     const cards = screen.getAllByRole('listitem').map((li) => li.querySelector('button')!);
     expect(cards).toHaveLength(8);
     expect(cards[0]).toHaveAttribute('aria-disabled', 'false');
@@ -26,9 +26,19 @@ describe('LevelSelectScreen', () => {
       unlocked: 2,
       levels: { 1: { streak: 0, stars: 6, completed: true }, 2: { streak: 2, stars: 3, completed: false } },
     };
-    render(<LevelSelectScreen progress={progress} onStart={vi.fn()} onParents={vi.fn()} />);
+    render(<LevelSelectScreen progress={progress} onStart={vi.fn()} onParents={vi.fn()} onAbout={vi.fn()} />);
     expect(screen.getByLabelText('9 Sterne gesammelt')).toBeInTheDocument();
     expect(screen.getByText('Geschafft · 6 Sterne')).toBeInTheDocument();
     expect(screen.getByText('2 von 5 in Folge')).toBeInTheDocument();
+  });
+
+  it('führt zum Eltern-Bereich und zur Über-Seite', async () => {
+    const onParents = vi.fn();
+    const onAbout = vi.fn();
+    render(<LevelSelectScreen progress={initialProgress()} onStart={vi.fn()} onParents={onParents} onAbout={onAbout} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Über Eulenzeit' }));
+    expect(onAbout).toHaveBeenCalledOnce();
+    await userEvent.click(screen.getByRole('button', { name: 'Für Eltern' }));
+    expect(onParents).toHaveBeenCalledOnce();
   });
 });

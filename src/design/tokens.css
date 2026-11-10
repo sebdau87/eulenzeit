@@ -109,6 +109,8 @@
   --clock-max-height: 55vh;
   --mini-clock-size: 112px;
   --tack-size: 84px;
+  /* Großer Tack (Über-Seite): folgt --tack-size in allen Breiten. */
+  --tack-size-large: calc(var(--tack-size) * 1.5);
   --answer-height: 64px;
   --button-height: 56px;
   --progress-height: 16px;
@@ -121,6 +123,9 @@
   --motion-base: 200ms;
   --motion-slow: 250ms;
   --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+  /* Sanftes Schweben (Über-Seite): eine Richtung, klein und langsam. */
+  --motion-float: 4s;
+  --float-distance: var(--space-2);
 }
 
 /* Tablet: 601–1024 px (Hauptzielgerät) */

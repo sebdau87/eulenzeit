@@ -9,6 +9,7 @@ import {
   selectOption,
   showHint,
   startSession,
+  unlockAll,
   type Progress,
   type Session,
 } from '../domain/session';
@@ -38,6 +39,7 @@ export interface LearningState {
   leave: () => void;
   setWordVariant: (variant: WordVariant) => void;
   resetProgress: () => void;
+  unlockAllLevels: () => void;
 }
 
 /** ?seed=123 in der URL macht Aufgaben reproduzierbar (für E2E-Tests). */
@@ -76,6 +78,7 @@ export function createLearningStore(rng: Rng, storage: ProgressStorage) {
     leave: () => set({ session: null }),
     setWordVariant: (wordVariant) => set({ settings: { ...get().settings, wordVariant }, session: null }),
     resetProgress: () => set({ progress: initialProgress(), session: null }),
+    unlockAllLevels: () => set({ progress: unlockAll(get().progress), session: null }),
   }));
 
   store.subscribe((state, prev) => {

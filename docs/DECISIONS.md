@@ -302,3 +302,23 @@ gerückte 12 nicht berührt; er bleibt deutlich kürzer als der Minutenzeiger (8
 - Datenschutz: Die App selbst trackt nichts; GitHub (Microsoft, USA) protokolliert als Hoster technisch
   bedingt IP-Adressen, setzt aber keine Cookies. Für eine öffentliche Nutzung durch Dritte wären
   Impressum/Datenschutzerklärung zu prüfen (keine Rechtsberatung).
+
+## Erweiterungen (2026-11-10)
+
+### D41 · Alle Level freischalten
+- Im Eltern-Bereich, Karte „Fortschritt“: „Alle Level freischalten“ mit Rückfrage (gleiches Muster wie
+  das Zurücksetzen; es ist immer nur eine Rückfrage offen).
+- Setzt nur das höchste freigeschaltete Level auf das letzte spielbare (`unlockAll` in `domain/session`).
+  Sterne, Serien und „geschafft“ bleiben – die Level sind offen, nicht geschafft.
+- Rückgängig nur über „Fortschritt zurücksetzen“; darauf weist die Rückfrage hin.
+
+### D42 · Über-Seite
+- Erreichbar über „Über Eulenzeit“ neben „Für Eltern“ in der Levelauswahl (`#/ueber`), ohne Eltern-Hürde.
+  Ein Knopf wie „Für Eltern“, kein Textlink: Links gibt es im Designsystem bisher nicht.
+- Inhalt: Kurzbeschreibung, Lernprojekt von Sebastian mit Claude Code, Stand. Weiterhin keine externen Links.
+- Stand als `MM/JJJJ` aus dem Build-Datum (`__BUILD_STAND__` in `vite.config.ts`, `src/globals.d.ts`, `src/buildInfo.ts`) –
+  stimmt nach jedem Deploy ohne Handpflege.
+- Tack: 1,5-fache Größe (`--tack-size-large`, folgt `--tack-size` in allen Breiten), Blinzeln unverändert
+  wie in den Übungen, dazu sanftes Schweben (`--float-distance` 8 px, `--motion-float` 4 s je Richtung).
+  Das Schweben liegt am Wrapper der Seite, die Tack-Komponente bleibt unverändert. Dekorativ (`aria-hidden`).
+  „Bewegung reduzieren“ schaltet Schweben und Blinzeln ab.

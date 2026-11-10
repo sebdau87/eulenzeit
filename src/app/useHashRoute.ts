@@ -6,12 +6,14 @@ export type Route =
   | { name: 'levels' }
   | { name: 'level'; level: LevelId }
   | { name: 'eltern' }
+  | { name: 'ueber' }
   | { name: 'komponenten' };
 
 export function parseRoute(hash: string): Route {
   const path = hash.replace(/^#\/?/, '');
   if (path === 'komponenten') return { name: 'komponenten' };
   if (path === 'eltern') return { name: 'eltern' };
+  if (path === 'ueber') return { name: 'ueber' };
   const match = /^level\/(\d+)$/.exec(path);
   const level = match ? Number(match[1]) : NaN;
   if (isLevelId(level)) return { name: 'level', level };
@@ -26,6 +28,8 @@ export function hrefFor(route: Route): string {
       return `#/level/${route.level}`;
     case 'eltern':
       return '#/eltern';
+    case 'ueber':
+      return '#/ueber';
     case 'komponenten':
       return '#/komponenten';
   }
@@ -40,6 +44,8 @@ export function titleFor(route: Route): string {
       return `Level ${route.level}: ${getLevel(route.level).title} – Eulenzeit`;
     case 'eltern':
       return 'Für Eltern – Eulenzeit';
+    case 'ueber':
+      return 'Über Eulenzeit – Eulenzeit';
     case 'komponenten':
       return 'Komponenten – Eulenzeit';
   }

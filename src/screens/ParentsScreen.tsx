@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState, type FormEvent } from 'react';
 import { Button, ScreenColumn } from '../components';
 import { getLevel } from '../domain/levels';
 import { checkChallenge, createChallenge, type GateChallenge } from '../domain/parentGate';
-import { totalStars, type Progress } from '../domain/session';
+import { allUnlocked, totalStars, type Progress } from '../domain/session';
 import { timeToGermanWords, type WordVariant } from '../domain/words';
 import type { Settings } from '../storage/progressStorage';
 import styles from './ParentsScreen.module.css';
@@ -14,6 +14,7 @@ export interface ParentsScreenProps {
   challenge?: () => GateChallenge;
   onWordVariant: (variant: WordVariant) => void;
   onReset: () => void;
+  onUnlockAll: () => void;
   onBack: () => void;
 }
 
@@ -83,11 +84,13 @@ export function ParentsScreen({
   challenge = () => createChallenge(Math.random),
   onWordVariant,
   onReset,
+  onUnlockAll,
   onBack,
 }: ParentsScreenProps) {
   const [unlocked, setUnlocked] = useState(false);
-  const [confirmReset, setConfirmReset] = useState(false);
-  const [resetDone, setResetDone] = useState(false);
+  // Immer nur eine Rückfrage und eine Meldung gleichzeitig.
+  const [confirm, setConfirm] = useState<'reset' | 'unlock' | null>(null);
+  const [done, setDone] = useState<'reset' | 'unlock' | null>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => headingRef.current?.focus(), [unlocked]);
@@ -134,29 +137,61 @@ export function ParentsScreen({
               {stars} {stars === 1 ? 'Stern' : 'Sterne'} gesammelt, freigeschaltet bis Level {progress.unlocked} (
               {getLevel(progress.unlocked).title}).
             </p>
-            {resetDone && (
+            {done && (
               <p className={styles.hint} role="status">
-                Der Fortschritt wurde zurückgesetzt.
+                {done === 'reset' ? 'Der Fortschritt wurde zurückgesetzt.' : 'Alle Level sind jetzt freigeschaltet.'}
               </p>
             )}
-            {!confirmReset ? (
-              <Button variant="secondary" onClick={() => setConfirmReset(true)}>
-                Fortschritt zurücksetzen
-              </Button>
-            ) : (
+            {confirm === null && (
+              <div className={styles.confirm}>
+                {allUnlocked(progress) ? (
+                  done !== 'unlock' && <p className={styles.hint}>Alle Level sind freigeschaltet.</p>
+                ) : (
+                  <Button variant="secondary" onClick={() => setConfirm('unlock')}>
+                    Alle Level freischalten
+                  </Button>
+                )}
+                <Button variant="secondary" onClick={() => setConfirm('reset')}>
+                  Fortschritt zurücksetzen
+                </Button>
+              </div>
+            )}
+            {confirm === 'unlock' && (
+              <div className={styles.confirm} role="group" aria-labelledby="confirm-text">
+                <p id="confirm-text">
+                  Wirklich alle Level freischalten? Die Sterne bleiben. Rückgängig geht das nur mit „Fortschritt
+                  zurücksetzen“.
+                </p>
+                <div className={styles.actions}>
+                  <Button
+                    onClick={() => {
+                      onUnlockAll();
+                      setConfirm(null);
+                      setDone('unlock');
+                    }}
+                  >
+                    Ja, freischalten
+                  </Button>
+                  <Button variant="secondary" onClick={() => setConfirm(null)}>
+                    Abbrechen
+                  </Button>
+                </div>
+              </div>
+            )}
+            {confirm === 'reset' && (
               <div className={styles.confirm} role="group" aria-labelledby="confirm-text">
                 <p id="confirm-text">Wirklich zurücksetzen? Alle Sterne und freigeschalteten Level gehen verloren.</p>
                 <div className={styles.actions}>
                   <Button
                     onClick={() => {
                       onReset();
-                      setConfirmReset(false);
-                      setResetDone(true);
+                      setConfirm(null);
+                      setDone('reset');
                     }}
                   >
                     Ja, zurücksetzen
                   </Button>
-                  <Button variant="secondary" onClick={() => setConfirmReset(false)}>
+                  <Button variant="secondary" onClick={() => setConfirm(null)}>
                     Abbrechen
                   </Button>
                 </div>

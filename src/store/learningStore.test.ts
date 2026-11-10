@@ -56,6 +56,17 @@ describe('learningStore', () => {
     });
   });
 
+  it('schaltet alle Level frei, behält Sterne und Einstellungen', () => {
+    const storage = new MemoryProgressStorage();
+    const levels = { 1: { streak: 2, stars: 9, completed: false } };
+    storage.save({ progress: { unlocked: 2, levels }, settings: { wordVariant: 'ost' } });
+    const store = createLearningStore(createRng(7), storage);
+    store.getState().startLevel(1);
+    store.getState().unlockAllLevels();
+    expect(store.getState().session).toBeNull();
+    expect(storage.load()).toEqual({ progress: { unlocked: 8, levels }, settings: { wordVariant: 'ost' } });
+  });
+
   it('stellt beim Zeiger-Stellen die Zeiger', () => {
     const store = createLearningStore(createRng(6), new MemoryProgressStorage());
     store.getState().startLevel(7);

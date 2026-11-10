@@ -1,0 +1,48 @@
+.screen {
+  align-items: center;
+}
+
+.title {
+  text-align: center;
+}
+
+.title:focus {
+  outline: none;
+}
+
+/* Etwas größer als in den Übungen; schwebt in den oberen Seitenrand hinein, berührt also nichts. */
+.tack {
+  --tack-size: var(--tack-size-large);
+  animation: float var(--motion-float) ease-in-out infinite alternate;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(var(--float-distance) * -1));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tack {
+    animation: none;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-5);
+  border-radius: var(--radius-l);
+  background: var(--color-card);
+}
+
+.stand {
+  font-size: var(--type-hint-size);
+  line-height: var(--type-hint-line);
+  color: var(--color-ink-weich);
+}

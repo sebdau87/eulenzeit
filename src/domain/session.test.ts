@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { STREAK_TO_UNLOCK } from './levels';
 import { createRng } from './random';
 import {
+  allUnlocked,
   checkAnswer,
   dial,
   initialProgress,
@@ -13,6 +14,7 @@ import {
   showHint,
   startSession,
   totalStars,
+  unlockAll,
   type Progress,
   type Session,
 } from './session';
@@ -26,6 +28,18 @@ function answer(s: Session, p: Progress, index: number) {
 }
 
 describe('Fortschritt', () => {
+  it('unlockAll gibt alle Level frei und lässt Sterne und Serien unverändert', () => {
+    const p: Progress = { unlocked: 2, levels: { 1: { streak: 0, stars: 6, completed: true } } };
+    const all = unlockAll(p);
+    expect(all.unlocked).toBe(8);
+    expect(all.levels).toBe(p.levels);
+    expect(isUnlocked(all, 8)).toBe(true);
+    expect(levelProgress(all, 8).completed).toBe(false);
+    expect(allUnlocked(p)).toBe(false);
+    expect(allUnlocked(all)).toBe(true);
+    expect(unlockAll(all)).toBe(all);
+  });
+
   it('startet mit Level 1 frei, ohne Sterne', () => {
     const p = initialProgress();
     expect(isUnlocked(p, 1)).toBe(true);
